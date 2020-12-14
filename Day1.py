@@ -70,6 +70,7 @@ def find_3_sum_2020():
                         if int(lines[x]) + int(lines[y]) + int(lines[z]) == 2020:
                             print(lines[x] + " " + lines[y] + " " + lines[z] + ": " + str(int(lines[x]) * int(lines[y])
                                                                                           * int(lines[z])))
+                            return
 
 
 if __name__ == '__main__':
