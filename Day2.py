@@ -28,3 +28,24 @@ their respective policies.
 
 How many passwords are valid according to their policies?
 """
+
+
+def count_valid_passwords(filepath):
+    f = open(filepath, "r")
+    lines = f.readlines()
+    count_of_valid = 0
+
+    for line in lines:
+        lower_bound = int(line.split("-")[0])
+        upper_bound = int(line.split("-")[1].split(":")[0].split(" ")[0])
+        letter = line.split("-")[1].split(":")[0].split(" ")[1].strip()
+        password = line.split("-")[1].split(":")[1].strip()
+        if password.count(letter) in range(lower_bound, upper_bound+1):
+            count_of_valid += 1
+
+    print(str(count_of_valid))
+    return count_of_valid
+
+
+if __name__ == '__main__':
+    count_valid_passwords("Files/input_Day2.txt")
