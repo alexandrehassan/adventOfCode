@@ -93,7 +93,9 @@ What do you get if you multiply together the number of trees encountered on each
 
 
 def number_of_trees(filename: str, x_slope: int, y_slope: int) -> int:
-    lines = open(filename, "r").readlines()
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
     x = 0
     trees = 0
     line_number = 0

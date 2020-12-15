@@ -62,6 +62,7 @@ In your expense report, what is the product of the three entries that sum to 202
 def find_3_sum_2020():
     f = open("Files\input_Day1.txt", "r")
     lines = f.readlines()
+    f.close()
     for x in range(len(lines)):
         if int(lines[x]) < 2020:
             for y in range(len(lines)):

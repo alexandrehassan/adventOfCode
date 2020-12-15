@@ -30,9 +30,10 @@ How many passwords are valid according to their policies?
 """
 
 
-def count_valid_passwords_sled(filepath):
-    f = open(filepath, "r")
-    lines = f.readlines()
+def count_valid_passwords_sled(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
     count_of_valid = 0
 
     for line in lines:
@@ -72,8 +73,9 @@ How many passwords are valid according to the new interpretation of the policies
 
 
 def count_valid_passwords_Toboggan(filepath):
-    f = open(filepath, "r")
-    lines = f.readlines()
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
     count_of_valid = 0
 
     for line in lines:
