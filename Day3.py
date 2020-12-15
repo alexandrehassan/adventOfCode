@@ -72,11 +72,14 @@ def number_of_trees_3_1(filename) -> int:
     x = 0
     trees = 0
     for line in lines:
-        if x + 3 > len(line):
-            x = x + 3 - len(line)
+        line = line.strip()
         if line[x] == '#':
             trees += 1
+        x += 3
+        if x >= len(line):
+            x = x - len(line)
     return trees
+
 
 if __name__ == '__main__':
     print(int(number_of_trees_3_1("Files/input_Day3.txt")))
