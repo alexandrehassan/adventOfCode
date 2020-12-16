@@ -27,28 +27,6 @@ needs at least 1. The first and third passwords are valid: they contain one a or
 their respective policies.
 
 How many passwords are valid according to their policies?
-"""
-
-
-def count_valid_passwords_sled(filename):
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
-    count_of_valid = 0
-
-    for line in lines:
-        lower_bound = int(line.split("-")[0])
-        upper_bound = int(line.split("-")[1].split(":")[0].split(" ")[0])
-        letter = line.split("-")[1].split(":")[0].split(" ")[1].strip()
-        password = line.split("-")[1].split(":")[1].strip()
-        if password.count(letter) in range(lower_bound, upper_bound + 1):
-            count_of_valid += 1
-
-    print(str(count_of_valid))
-    return count_of_valid
-
-
-"""
 --- Part Two ---
 
 While it appears you validated the passwords correctly, they don't seem to be what the Official Toboggan Corporate 
@@ -70,6 +48,24 @@ Given the same example list from above:
 
 How many passwords are valid according to the new interpretation of the policies?
 """
+
+
+def count_valid_passwords_sled(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+    count_of_valid = 0
+
+    for line in lines:
+        lower_bound = int(line.split("-")[0])
+        upper_bound = int(line.split("-")[1].split(":")[0].split(" ")[0])
+        letter = line.split("-")[1].split(":")[0].split(" ")[1].strip()
+        password = line.split("-")[1].split(":")[1].strip()
+        if password.count(letter) in range(lower_bound, upper_bound + 1):
+            count_of_valid += 1
+
+    print(str(count_of_valid))
+    return count_of_valid
 
 
 def count_valid_passwords_Toboggan(filepath):

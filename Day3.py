@@ -63,15 +63,6 @@ In this example, traversing the map using this slope would cause you to encounte
 
 Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many trees would you
 encounter?
-
-"""
-
-
-def number_of_trees_3_1(filename) -> int:
-    return number_of_trees(filename, 3, 1)
-
-
-"""
 --- Part Two ---
 
 Time to check the rest of the slopes - you need to minimize the probability of a sudden arboreal stop, after all.
@@ -90,6 +81,10 @@ these produce the answer 336.
 
 What do you get if you multiply together the number of trees encountered on each of the listed slopes?
 """
+
+
+def number_of_trees_3_1(filename) -> int:
+    return number_of_trees(filename, 3, 1)
 
 
 def number_of_trees(filename: str, x_slope: int, y_slope: int) -> int:

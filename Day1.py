@@ -32,20 +32,7 @@ In this list, the two entries that sum to 2020 are 1721 and 299. Multiplying the
 
 Of course, your expense report is much larger. Find the two entries that sum to 2020; what do you get if you
 multiply them together?
-"""
 
-
-def find_2_sum_2020():
-    f = open("Files\input_Day1.txt", "r")
-    lines = f.readlines()
-    for x in range(len(lines)):
-        if int(lines[x]) < 2020:
-            for y in range(x, len(lines)):
-                if int(lines[x]) + int(lines[y]) == 2020:
-                    print(lines[x] + " " + lines[y] + ": " + str(int(lines[x]) * int(lines[y])))
-
-
-"""
 --- Part Two ---
 
 The Elves in accounting are thankful for your help; one of them even offers you a starfish coin they had left over
@@ -57,6 +44,16 @@ produces the answer, 241861950.
 
 In your expense report, what is the product of the three entries that sum to 2020?
 """
+
+
+def find_2_sum_2020():
+    f = open("Files\input_Day1.txt", "r")
+    lines = f.readlines()
+    for x in range(len(lines)):
+        if int(lines[x]) < 2020:
+            for y in range(x, len(lines)):
+                if int(lines[x]) + int(lines[y]) == 2020:
+                    print(lines[x] + " " + lines[y] + ": " + str(int(lines[x]) * int(lines[y])))
 
 
 def find_3_sum_2020():

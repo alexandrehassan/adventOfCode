@@ -58,56 +58,7 @@ According to the above rules, your improved system would report 2 valid passport
 
 Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file,
 how many passports are valid?
-"""
 
-
-class Passport:
-    def __init__(self):
-        self.byr = False
-        self.iyr = False
-        self.eyr = False
-        self.hgt = False
-        self.hcl = False
-        self.ecl = False
-        self.pid = False
-        self.cid = False
-
-    def is_valid(self) -> int:
-        return int(self.byr and self.iyr and self.eyr and self.hgt and self.hcl and self.ecl and self.pid)
-
-
-def count_valid_passports(filename: str) -> int:
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
-    passport = Passport()
-    valid_count = 0
-    for line in lines:
-        line = line.strip()
-        if line == "":
-            valid_count += passport.is_valid()
-            passport = Passport()
-        else:
-            if "byr" in line:
-                passport.byr = True
-            if "iyr" in line:
-                passport.iyr = True
-            if "eyr" in line:
-                passport.eyr = True
-            if "hgt" in line:
-                passport.hgt = True
-            if "hcl" in line:
-                passport.hcl = True
-            if "ecl" in line:
-                passport.ecl = True
-            if "pid" in line:
-                passport.pid = True
-            if "cid" in line:
-                passport.cid = True
-    return valid_count
-
-
-"""
 --- Part Two ---
 
 The line is moving more quickly now, but you overhear airport security talking about how passports with invalid data 
@@ -182,6 +133,52 @@ iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as 
 optional. In your batch file, how many passports are valid? 
 """
+
+
+class Passport:
+    def __init__(self):
+        self.byr = False
+        self.iyr = False
+        self.eyr = False
+        self.hgt = False
+        self.hcl = False
+        self.ecl = False
+        self.pid = False
+        self.cid = False
+
+    def is_valid(self) -> int:
+        return int(self.byr and self.iyr and self.eyr and self.hgt and self.hcl and self.ecl and self.pid)
+
+
+def count_valid_passports(filename: str) -> int:
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+    passport = Passport()
+    valid_count = 0
+    for line in lines:
+        line = line.strip()
+        if line == "":
+            valid_count += passport.is_valid()
+            passport = Passport()
+        else:
+            if "byr" in line:
+                passport.byr = True
+            if "iyr" in line:
+                passport.iyr = True
+            if "eyr" in line:
+                passport.eyr = True
+            if "hgt" in line:
+                passport.hgt = True
+            if "hcl" in line:
+                passport.hcl = True
+            if "ecl" in line:
+                passport.ecl = True
+            if "pid" in line:
+                passport.pid = True
+            if "cid" in line:
+                passport.cid = True
+    return valid_count
 
 
 class Passport_Strict:
