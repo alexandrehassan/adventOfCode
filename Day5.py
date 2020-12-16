@@ -1,3 +1,4 @@
+import Common as ad
 """
 --- Day 5: Binary Boarding ---
 
@@ -95,9 +96,7 @@ def find_id_number(string: str) -> int:
 
 
 def number_1(filename: str) -> int:
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
     biggestID = 0
     for line in lines:
         biggestID = max(biggestID, find_id_number(line.strip()))
@@ -105,9 +104,7 @@ def number_1(filename: str) -> int:
 
 
 def find_seat(filename: str) -> int:
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
     ids = []
     for line in lines:
         ids.append(find_id_number(line.strip()))
@@ -118,4 +115,5 @@ def find_seat(filename: str) -> int:
 
 
 if __name__ == '__main__':
+    print(number_1("Files/input_Day5.txt"))
     print(find_seat("Files/input_Day5.txt"))

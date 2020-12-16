@@ -1,3 +1,4 @@
+import Common as ad
 """
 --- Day 3: Toboggan Trajectory ---
 
@@ -84,13 +85,11 @@ What do you get if you multiply together the number of trees encountered on each
 
 
 def number_of_trees_3_1(filename) -> int:
-    return number_of_trees(filename, 3, 1)
+    lines = ad.get_lines(filename)
+    return number_of_trees(lines, 3, 1)
 
 
-def number_of_trees(filename: str, x_slope: int, y_slope: int) -> int:
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+def number_of_trees(lines: list, x_slope: int, y_slope: int) -> int:
     x = 0
     trees = 0
     line_number = 0
@@ -106,12 +105,12 @@ def number_of_trees(filename: str, x_slope: int, y_slope: int) -> int:
 
 
 def solve_number_2(filename):
-    file = filename
-    slope_1_1 = number_of_trees(file, 1, 1)
-    slope_3_1 = number_of_trees(file, 3, 1)
-    slope_5_1 = number_of_trees(file, 5, 1)
-    slope_7_1 = number_of_trees(file, 7, 1)
-    slope_1_2 = number_of_trees(file, 1, 2)
+    lines = ad.get_lines(filename)
+    slope_1_1 = number_of_trees(lines, 1, 1)
+    slope_3_1 = number_of_trees(lines, 3, 1)
+    slope_5_1 = number_of_trees(lines, 5, 1)
+    slope_7_1 = number_of_trees(lines, 7, 1)
+    slope_1_2 = number_of_trees(lines, 1, 2)
     return slope_1_1 * slope_3_1 * slope_5_1 * slope_7_1 * slope_1_2
 
 

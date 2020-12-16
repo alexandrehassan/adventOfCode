@@ -1,4 +1,5 @@
 import re
+import Common as ad
 
 """
 --- Day 4: Passport Processing ---
@@ -151,9 +152,7 @@ class Passport:
 
 
 def count_valid_passports(filename: str) -> int:
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
     passport = Passport()
     valid_count = 0
     for line in lines:
@@ -254,9 +253,7 @@ def count_valid_passports_2(filename: str) -> int:
     Parses the file and creates passport objects for each of them, then sets the different values found in the file
     and counts the number of valid passports
     """
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
     passport = Passport_Strict()
     valid_count = 0
     for line in lines:
@@ -288,4 +285,5 @@ def count_valid_passports_2(filename: str) -> int:
 
 
 if __name__ == '__main__':
+    print(count_valid_passports("Files/input_Day4.txt"))
     print(count_valid_passports_2("Files/input_Day4.txt"))

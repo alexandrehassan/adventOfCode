@@ -1,3 +1,4 @@
+import Common as ad
 """
 --- Day 2: Password Philosophy ---
 
@@ -50,10 +51,8 @@ How many passwords are valid according to the new interpretation of the policies
 """
 
 
-def count_valid_passwords_sled(filename):
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+def count_valid_passwords_sled(filename) -> int:
+    lines = ad.get_lines(filename)
     count_of_valid = 0
 
     for line in lines:
@@ -64,14 +63,11 @@ def count_valid_passwords_sled(filename):
         if password.count(letter) in range(lower_bound, upper_bound + 1):
             count_of_valid += 1
 
-    print(str(count_of_valid))
     return count_of_valid
 
 
-def count_valid_passwords_Toboggan(filepath):
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+def count_valid_passwords_Toboggan(filename) -> int:
+    lines = ad.get_lines(filename)
     count_of_valid = 0
 
     for line in lines:
@@ -86,5 +82,5 @@ def count_valid_passwords_Toboggan(filepath):
 
 
 if __name__ == '__main__':
-    count_valid_passwords_sled("Files/input_Day2.txt")
-    count_valid_passwords_Toboggan("Files/input_Day2.txt")
+    print(count_valid_passwords_sled("Files/input_Day2.txt"))
+    print(count_valid_passwords_Toboggan("Files/input_Day2.txt"))

@@ -1,4 +1,5 @@
 from collections import Counter
+import Common as ad
 """
 --- Day 6: Custom Customs ---
 
@@ -94,9 +95,7 @@ class group:
         return len(self.questions)
 
 def sum_of_questions(filename):
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
 
     g = group()
     count = 0
@@ -150,9 +149,7 @@ class new_group:
 
 
 def sum_of_questions_2(filename):
-    file = open(filename, "r")
-    lines = file.readlines()
-    file.close()
+    lines = ad.get_lines(filename)
 
     g = new_group()
     p = Person()
@@ -175,6 +172,5 @@ def sum_of_questions_2(filename):
 
 
 if __name__ == "__main__":
-    # print(sum_of_questions("Files/input_Day6.txt"))
+    print(sum_of_questions("Files/input_Day6.txt"))
     print(sum_of_questions_2("Files/input_Day6.txt"))
-    # print(sum_of_questions_2("Files/TestingFile.txt"))
