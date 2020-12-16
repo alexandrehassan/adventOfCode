@@ -1,3 +1,4 @@
+from collections import Counter
 """
 --- Day 6: Custom Customs ---
 
@@ -42,5 +43,138 @@ This list represents answers from five groups:
 In this example, the sum of these counts is 3 + 3 + 3 + 1 + 1 = 11.
 
 For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
-"""
 
+--- Part Two ---
+
+As you finish the last group's customs declaration, you notice that you misread one word in the instructions:
+
+You don't need to identify the questions to which anyone answered "yes"; you need to identify the questions to which everyone answered "yes"!
+
+Using the same example as above:
+
+abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b
+
+This list represents answers from five groups:
+
+    In the first group, everyone (all 1 person) answered "yes" to 3 questions: a, b, and c.
+    In the second group, there is no question to which everyone answered "yes".
+    In the third group, everyone answered yes to only 1 question, a. Since some people did not answer "yes" to b or c, they don't count.
+    In the fourth group, everyone answered yes to only 1 question, a.
+    In the fifth group, everyone (all 1 person) answered "yes" to 1 question, b.
+
+In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
+
+For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
+
+"""
+# part 1
+class group:
+    def __init__(self) -> None:
+        self.questions = []
+
+    def add_question(self, string:str):
+        if string not in self.questions:
+            self.questions.append(string)
+
+    def get_count(self):
+        return len(self.questions)
+
+def sum_of_questions(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+
+    g = group()
+    count = 0
+
+    for line in lines:
+        line = line.strip()
+        if line == "":
+            count += g.get_count()
+            g = group()
+        else:
+            for ch in line:
+                g.add_question(ch)
+
+    count += g.get_count()
+    g = group()
+    return count
+
+
+# part 2
+class Person:
+    def __init__(self) -> None:
+        self.questions = []
+
+    def add_question(self, string:str):
+        if string not in self.questions:
+            self.questions.append(string)
+
+    def get_questions(self) -> list:
+        return self.questions
+
+class new_group:
+    def __init__(self) -> None:
+        self.people = []
+    
+    def add_person(self, person: Person) -> None:
+        self.people.append(person)
+    
+    def get_all_questions(self) -> list:
+        new_list = []
+        for person in self.people:
+            new_list.extend(person.get_questions())
+        return new_list
+    
+    def get_count(self) -> int:
+        counter = Counter(self.get_all_questions())
+        sum = 0
+        for char in counter:
+            if counter.get(char) == len(self.people):
+                sum+=1
+        return sum
+
+
+def sum_of_questions_2(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+
+    g = new_group()
+    p = Person()
+    count = 0
+
+    for line in lines:
+        line = line.strip()
+        if line == "":
+            count += g.get_count()
+            g = new_group()
+        else:
+            for ch in line:
+                p.add_question(ch)
+            g.add_person(p)
+            p = Person()
+
+    count+=g.get_count()
+
+    return count
+
+
+if __name__ == "__main__":
+    # print(sum_of_questions("Files/input_Day6.txt"))
+    print(sum_of_questions_2("Files/input_Day6.txt"))
+    # print(sum_of_questions_2("Files/TestingFile.txt"))
