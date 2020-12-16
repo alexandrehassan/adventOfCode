@@ -1,3 +1,5 @@
+import re
+
 """
 --- Day 4: Passport Processing ---
 
@@ -178,7 +180,115 @@ eyr:2022
 iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
 
 Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as 
-optional. In your batch file, how many passports are valid? """
+optional. In your batch file, how many passports are valid? 
+"""
+
+
+class Passport_Strict:
+    def __init__(self):
+        self.byr = False
+        self.iyr = False
+        self.eyr = False
+        self.hgt = False
+        self.hcl = False
+        self.ecl = False
+        self.pid = False
+        self.cid = False
+
+    def set_byr(self, string: str):
+        """
+        sets the boolean value of byr after checking if it is valid or not (between 1920 and 2002)
+        """
+        self.byr = int(string) in range(1920, 2003)
+
+    def set_iyr(self, string: str):
+        """
+        sets the boolean value of iyr after checking if it is valid or not (between 2010 and 2020)
+        """
+        self.iyr = int(string) in range(2010, 2021)
+
+    def set_eyr(self, string: str):
+        """
+        sets the boolean value of eyr after checking if it is valid or not (between 2020 and 2030)
+        """
+        self.eyr = int(string) in range(2020, 2031)
+
+    def set_hgt(self, hgt_value: str):
+        """
+        sets the boolean value of hgt after checking if it is valid or not (
+            If cm, the number must be at least 150 and at most 193.
+            If in, the number must be at least 59 and at most 76.)
+        """
+        if "cm" in hgt_value:
+            self.hgt = int(hgt_value.split("cm")[0]) in range(150, 194)
+        elif "in" in hgt_value:
+            self.hgt = int(hgt_value.split("in")[0]) in range(59, 77)
+        else:
+            self.hgt = False
+
+    def set_hcl(self, hcl_value: str):
+        """
+        sets the boolean value of hcl after checking if it is valid or not (a # followed by exactly six characters
+                0-9 or a-f.)
+        """
+        char_set = re.compile('#[a-f0-9]{6}')
+        self.hcl = bool(char_set.search(hcl_value))
+
+    def set_ecl(self, string: str):
+        """
+        sets the boolean value of eyr after checking if it is valid or not (exactly one of: amb blu brn gry grn hzl oth)
+        """
+        valid_ecl = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']
+        self.ecl = any(ect in string for ect in valid_ecl)
+
+    def set_pid(self, string: str):
+        """
+        sets the boolean value of eyr after checking if it is valid or not (a nine-digit number, including leading
+            zeroes)
+        """
+        self.pid = len(string) == 9 and string.isdigit()
+
+    def is_valid(self) -> int:
+        return int(self.byr and self.iyr and self.eyr and self.hgt and self.hcl and self.ecl and self.pid)
+
+
+def count_valid_passports_2(filename: str) -> int:
+    """
+    Parses the file and creates passport objects for each of them, then sets the different values found in the file
+    and counts the number of valid passports
+    """
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+    passport = Passport_Strict()
+    valid_count = 0
+    for line in lines:
+        line = line.strip()
+        if line == "":
+            valid_count += passport.is_valid()
+            passport = Passport_Strict()
+        else:
+            attributes = line.strip().split(" ")
+            for attribute in attributes:
+                attribute = attribute.strip()
+                att = attribute.split(":")
+                if "byr" == att[0]:
+                    passport.set_byr(att[1])
+                elif "iyr" == att[0]:
+                    passport.set_iyr(att[1])
+                elif "eyr" == att[0]:
+                    passport.set_eyr(att[1])
+                elif "hgt" == att[0]:
+                    passport.set_hgt(att[1])
+                elif "hcl" == att[0]:
+                    passport.set_hcl(att[1])
+                elif "ecl" == att[0]:
+                    passport.set_ecl(att[1])
+                elif "pid" == att[0]:
+                    passport.set_pid(att[1])
+
+    return valid_count
+
 
 if __name__ == '__main__':
-    print(count_valid_passports("Files/input_Day4.txt"))
+    print(count_valid_passports_2("Files/input_Day4.txt"))
