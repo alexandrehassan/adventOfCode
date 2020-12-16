@@ -94,5 +94,31 @@ def number_1(filename: str) -> int:
     return biggestID
 
 
+"""
+--- Part Two ---
+
+Ding! The "fasten seat belt" signs have turned on. Time to find your seat.
+
+It's a completely full flight, so your seat should be the only missing boarding pass in your list. However, there's a catch: some of the seats at the very front and back of the plane don't exist on this aircraft, so they'll be missing from your list as well.
+
+Your seat wasn't at the very front or back, though; the seats with IDs +1 and -1 from yours will be in your list.
+
+What is the ID of your seat?
+"""
+
+
+def find_seat(filename: str) -> int:
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+    ids = []
+    for line in lines:
+        ids.append(find_id_number(line.strip()))
+    ids.sort()
+    for i in range(1, len(ids)):
+        if ids[i - 1] + 1 != ids[i]:
+            return ids[i - 1] + 1
+
+
 if __name__ == '__main__':
-    print(number_1("Files/input_Day5.txt"))
+    print(find_seat("Files/input_Day5.txt"))
