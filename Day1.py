@@ -1,4 +1,4 @@
-from . import Common as ad
+import Common as ad
 """
 --- Day 1: Report Repair ---
 

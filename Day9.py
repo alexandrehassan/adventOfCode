@@ -85,12 +85,6 @@ To find the encryption weakness, add together the smallest and largest number in
 What is the encryption weakness in your XMAS-encrypted list of numbers?
 
 """
-def clean_list(lines: list) -> list:
-    new_list = []
-    for line in lines:
-        new_list.append(int(line.strip()))
-    return new_list
-
 
 def find_first_wrong(lines: list, offset: int) -> int:
     
@@ -121,11 +115,9 @@ def look_for_weakness(sum_to: int, lines: list, start: int, end: int)-> int:
 
 
 if __name__ == "__main__":
-    lines = ad.get_lines("Files/input_Day9.txt")
-    lines = clean_list(lines)
+    lines = ad.get_int_lines("Files/input_Day9.txt")
 
-    test_input = ad.get_lines("Files/TestingFile.txt")
-    test_input = clean_list(test_input)
+    test_input = ad.get_int_lines("Files/TestingFile.txt")
 
     print(find_first_wrong(lines, 25))
     print(find_weakness(lines))
