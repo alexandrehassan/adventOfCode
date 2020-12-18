@@ -1,4 +1,4 @@
-import Common as ad
+from Common import get_int_lines, time_function
 """
 --- Day 1: Report Repair ---
 
@@ -46,32 +46,36 @@ produces the answer, 241861950.
 In your expense report, what is the product of the three entries that sum to 2020?
 """
 
-
-def find_2_sum_2020():
-    lines = ad.get_lines("Files\input_Day1.txt")
+SUM = 2020
+def find_2_sum_2020() -> int:
     for x in range(len(lines)):
-        if int(lines[x]) < 2020:
+        if lines[x] < SUM:
             for y in range(x, len(lines)):
-                if int(lines[x]) + int(lines[y]) == 2020:
-                    print(lines[x] + " " + lines[y] + ": " + str(int(lines[x]) * int(lines[y])))
+                if lines[x] + lines[y] == SUM:
+                    return lines[x] * lines[y]
+                    # print("%d * %d: %d" % (lines[x], lines[y], lines[x] * lines[y]))
 
 
-def find_3_sum_2020():
-    lines = ad.get_lines("Files\input_Day1.txt")
+def find_3_sum_2020() -> int:
     for x in range(len(lines)):
-        if int(lines[x]) < 2020:
+        if lines[x] < SUM:
             for y in range(len(lines)):
-                if int(lines[x]) + int(lines[y]) < 2020:
+                if lines[x] + lines[y] < SUM:
                     for z in range(len(lines)):
-                        if int(lines[x]) + int(lines[y]) + int(lines[z]) == 2020:
-                            print(lines[x] + " " + lines[y] + " " + lines[z] + ": " + str(int(lines[x]) * int(lines[y])
-                                                                                          * int(lines[z])))
-                            return
-
-
+                        if lines[x] + lines[y] + lines[z] == SUM:
+                            return lines[x] * lines[y] * lines[z]
+                            # print("%d * %d * %d: %d" % (lines[x], lines[y], lines[z],  lines[x] * lines[y] * lines[z] ))
+                            
+                            
 if __name__ == '__main__':
-    # read_file()
-    find_2_sum_2020()
-    find_3_sum_2020()
-    # testing streamdeck
+    lines = get_int_lines("Files\input_Day1.txt")
+
+    print(find_2_sum_2020())
+    print(find_3_sum_2020())
+
+    # 0.0018166195
+    print(time_function(func=find_2_sum_2020, iterations=100))
+    # 0.0031497075
+    print(time_function(func=find_3_sum_2020, iterations=100))
+
 

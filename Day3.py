@@ -1,4 +1,4 @@
-import Common as ad
+from Common import get_lines, time_function
 """
 --- Day 3: Toboggan Trajectory ---
 
@@ -84,8 +84,7 @@ What do you get if you multiply together the number of trees encountered on each
 """
 
 
-def number_of_trees_3_1(filename) -> int:
-    lines = ad.get_lines(filename)
+def number_of_trees_3_1() -> int:
     return number_of_trees(lines, 3, 1)
 
 
@@ -94,7 +93,7 @@ def number_of_trees(lines: list, x_slope: int, y_slope: int) -> int:
     trees = 0
     line_number = 0
     while line_number < len(lines):
-        line = lines[line_number].strip()
+        line = lines[line_number]
         if line[x] == '#':
             trees += 1
         x += x_slope
@@ -104,8 +103,7 @@ def number_of_trees(lines: list, x_slope: int, y_slope: int) -> int:
     return trees
 
 
-def solve_number_2(filename):
-    lines = ad.get_lines(filename)
+def solve_number_2():
     slope_1_1 = number_of_trees(lines, 1, 1)
     slope_3_1 = number_of_trees(lines, 3, 1)
     slope_5_1 = number_of_trees(lines, 5, 1)
@@ -115,5 +113,11 @@ def solve_number_2(filename):
 
 
 if __name__ == '__main__':
-    print(number_of_trees_3_1("Files/input_Day3.txt"))
-    print(solve_number_2("Files/input_Day3.txt"))
+    lines = get_lines("Files/input_Day3.txt")
+    print(number_of_trees_3_1()) # 284
+    print(solve_number_2()) # 3510149120
+
+    # # 7.570900000000002e-05
+    # print(time_function(func=number_of_trees_3_1, iterations=100))
+    # # 0.000337664
+    # print(time_function(func=solve_number_2, iterations=100))

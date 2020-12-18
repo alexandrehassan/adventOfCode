@@ -1,4 +1,4 @@
-import Common as ad
+from Common import time_function, get_lines
 """
 --- Day 5: Binary Boarding ---
 
@@ -64,47 +64,30 @@ What is the ID of your seat?
 
 """
 
-
-def find_row_number(string: str, position: range) -> int:
-    new_string = string[1:len(string)]
-    if len(string) == 0:
-        return position.start
-    if string[0] == "F":
-        return find_row_number(new_string,
-                               range(position.start, position.start + (position.stop - position.start) // 2))
-    else:
-        return find_row_number(new_string, range(position.start + (position.stop - position.start) // 2 +
-                                                 (position.stop - position.start) % 2, position.stop))
-
-
-def find_col_number(string: str, position: range) -> int:
-    new_string = string[1:len(string)]
-    if len(string) == 0:
-        return position.start
-    if string[0] == "L":
-        return find_col_number(new_string,
-                               range(position.start, position.start + (position.stop - position.start) // 2))
-    else:
-        return find_col_number(new_string, range(position.start + (position.stop - position.start) // 2 +
-                                                 (position.stop - position.start) % 2, position.stop))
-
+def find_seat_num(string: str, position: range, top_char: str, multiple: int) -> int:
+    while len(string) != 0:
+        if string[0] == top_char:
+            position = range(position.start, position.start + (position.stop - position.start) // 2)
+            
+        else:
+            position = range(position.start + (position.stop - position.start) // 2 + (position.stop - position.start) % 2, position.stop)
+        string = string[1:len(string)]
+    return position.start * multiple
 
 def find_id_number(string: str) -> int:
-    row = find_row_number(string[0:7], range(0, 127))
-    col = find_col_number(string[7:10], range(0, 7))
-    return row * 8 + col
+    new_row = find_seat_num(string[0:7], range(0, 127), "F", 8)
+    new_col = find_seat_num(string[7:10], range(0, 7), "L", 1)
+    return new_col + new_row
 
 
-def number_1(filename: str) -> int:
-    lines = ad.get_lines(filename)
+def number_1() -> int:
     biggestID = 0
     for line in lines:
         biggestID = max(biggestID, find_id_number(line.strip()))
     return biggestID
 
 
-def find_seat(filename: str) -> int:
-    lines = ad.get_lines(filename)
+def find_seat() -> int:
     ids = []
     for line in lines:
         ids.append(find_id_number(line.strip()))
@@ -115,5 +98,11 @@ def find_seat(filename: str) -> int:
 
 
 if __name__ == '__main__':
-    print(number_1("Files/input_Day5.txt"))
-    print(find_seat("Files/input_Day5.txt"))
+    lines = get_lines("Files/input_Day5.txt")
+    print(number_1()) # 832
+    print(find_seat()) # 517
+
+    # # 0.004840388
+    # print(time_function(func=number_1, iterations=100))
+    # # 0.004751472
+    # print(time_function(func=find_seat, iterations=100))

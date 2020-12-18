@@ -1,4 +1,5 @@
-import Common as ad
+from Common import get_lines, time_function
+
 """
 --- Day 2: Password Philosophy ---
 
@@ -51,8 +52,7 @@ How many passwords are valid according to the new interpretation of the policies
 """
 
 
-def count_valid_passwords_sled(filename) -> int:
-    lines = ad.get_lines(filename)
+def count_valid_passwords_sled() -> int:
     count_of_valid = 0
 
     for line in lines:
@@ -66,8 +66,7 @@ def count_valid_passwords_sled(filename) -> int:
     return count_of_valid
 
 
-def count_valid_passwords_Toboggan(filename) -> int:
-    lines = ad.get_lines(filename)
+def count_valid_passwords_Toboggan() -> int:
     count_of_valid = 0
 
     for line in lines:
@@ -80,7 +79,22 @@ def count_valid_passwords_Toboggan(filename) -> int:
 
     return count_of_valid
 
+def time(iterations: int) -> None:
+    # 0.002293704
+    sum_passwords_Toboggan = timeit(count_valid_passwords_sled, number=iterations)
+    print(sum_passwords_Toboggan/iterations)
+
+    # 0.002097902
+    sum_passwords_sled = timeit(count_valid_passwords_Toboggan, number=iterations)
+    print(sum_passwords_sled/iterations)
 
 if __name__ == '__main__':
-    print(count_valid_passwords_sled("Files/input_Day2.txt"))
-    print(count_valid_passwords_Toboggan("Files/input_Day2.txt"))
+    lines = get_lines("Files/input_Day2.txt")
+
+    print(count_valid_passwords_sled())
+    print(count_valid_passwords_Toboggan())
+
+    # # 0.002293704
+    # print(time_function(func=count_valid_passwords_sled, iterations=100))
+    # # 0.002097902
+    # print(time_function(func=count_valid_passwords_sled, iterations=100))

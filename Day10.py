@@ -106,11 +106,46 @@ def find_largest_chain(lines: list) -> int:
             # print(num1)
         pos+=1
     return num1 * num3
-    
+
+def make_dif_list(lst: list) -> list:
+    new_list = []
+    for pos in range(len(lst) -1):
+        new_list.append(lst[pos+1] - lst[pos])
+    print(new_list)
+    return new_list
+
+def find_number_of_chains(lines: list) -> int:
+    print(lines)
+    one_branch_values = [1, 2, 4, 7]
+    lines.append(0)
+    lines.sort()
+    top = lines[-1] + 3
+    lines.append(top)
+    branches = 1
+    dif_list = make_dif_list(lines)
+
+    for i in range(len(dif_list)):
+        if dif_list[i] == 3:
+            continue
+        else: # 1
+            count_ones = 1
+            i+=1
+            while dif_list[i] == 1:
+                count_ones+=1
+                i+=1
+            branches += one_branch_values[count_ones]
+            
+
+    return branches
+            
+            
+
+
 
 if __name__ == "__main__":
     lines = get_int_lines("Files/input_Day10.txt")
     testing = get_int_lines("Files/TestingFile.txt")
-    print(find_largest_chain(lines)) # off by one num1 the answer is 2414 but this returns 2380
+    # print(find_largest_chain(lines)) # off by one num1 the answer is 2414 but this returns 2380
+    print(find_number_of_chains(testing))
 
 

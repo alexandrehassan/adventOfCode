@@ -1,5 +1,5 @@
 from collections import Counter
-import Common as ad
+from Common import time_function, get_lines
 """
 --- Day 6: Custom Customs ---
 
@@ -94,14 +94,10 @@ class group:
     def get_count(self):
         return len(self.questions)
 
-def sum_of_questions(filename):
-    lines = ad.get_lines(filename)
-
+def sum_of_questions():
     g = group()
     count = 0
-
     for line in lines:
-        line = line.strip()
         if line == "":
             count += g.get_count()
             g = group()
@@ -110,7 +106,6 @@ def sum_of_questions(filename):
                 g.add_question(ch)
 
     count += g.get_count()
-    g = group()
     return count
 
 
@@ -148,8 +143,8 @@ class new_group:
         return sum
 
 
-def sum_of_questions_2(filename):
-    lines = ad.get_lines(filename)
+def sum_of_questions_2():
+    
 
     g = new_group()
     p = Person()
@@ -172,5 +167,11 @@ def sum_of_questions_2(filename):
 
 
 if __name__ == "__main__":
-    print(sum_of_questions("Files/input_Day6.txt"))
-    print(sum_of_questions_2("Files/input_Day6.txt"))
+    lines = get_lines("Files/input_Day6.txt")
+    print(sum_of_questions()) # 6297
+    print(sum_of_questions_2()) # 3158
+
+    # # 0.003639436
+    # print(time_function(func=sum_of_questions, iterations=100))
+    # # 0.006841989
+    # print(time_function(func=sum_of_questions_2, iterations=100))

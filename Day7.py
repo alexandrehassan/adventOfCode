@@ -1,5 +1,4 @@
-from re import L
-import Common as ad
+from Common import time_function, get_lines
 """
 --- Day 7: Handy Haversacks ---
 
@@ -91,7 +90,7 @@ class bagInfo:
 
 
 
-def count_possible_bags(lines: list) -> int:
+def count_possible_bags() -> int:
     bags = {}
     for line in lines:
         temp = parse_line(line)
@@ -122,7 +121,7 @@ def look_for_gold(bag_name: str, bags: dict) -> bool:
 
 
 def parse_line(line: str) -> bagInfo:
-    line = line.strip().replace(".", "")
+    line = line.replace(".", "")
     split1 = line.split("bags contain")
     bag = bagInfo(split1[0])
     inner_bags = split1[1].split(",")
@@ -134,7 +133,7 @@ def parse_line(line: str) -> bagInfo:
     return bag
 
 # part 2
-def gold_contains(lines: list) -> int:
+def gold_contains() -> int:
     bags = {}
     for line in lines:
         temp = parse_line(line)
@@ -148,11 +147,15 @@ def count_bags(name: str, bags: list) -> int:
     count = 1
     for bag in in_bag:
         count += in_bag[bag] * count_bags(bag, bags)
-        # print(name + " -> " +str(count)+"-" + str(bag))
     
     return count
 
 if __name__ == "__main__":
-    lines = ad.get_lines("Files/input_Day7.txt")
-    print(count_possible_bags(lines)) #Correct answer 148
-    print(gold_contains(lines)) #Correct answer 24867
+    lines = get_lines("Files/input_Day7.txt")
+    print(count_possible_bags()) #Correct answer 148
+    print(gold_contains()) #Correct answer 24867
+
+    # # 0.05901477199999999
+    # print(time_function(func=count_possible_bags, iterations=100))
+    # # 0.002063158999999999
+    # print(time_function(func=gold_contains, iterations=100))

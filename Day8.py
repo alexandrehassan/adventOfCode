@@ -1,4 +1,4 @@
-import Common as ad
+from Common import time_function, get_lines
 """
 --- Day 8: Handheld Halting ---
 
@@ -47,64 +47,60 @@ Immediately before the program would run an instruction a second time, the value
 Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 
 """
-def find_infinite_loop(lines:list) ->"int":
-    return exectute_commands(lines, 0, 0, list())
+completed = False
 
-def exectute_commands(lines: list, lineNum: int, acc: int, executed: list) -> int:
-    if lineNum in executed:
-        return acc
-    split = lines[lineNum].strip().split(" ")
-    op = split[0]
-    arg = int(split[1])
-    executed.append(lineNum)
-    if op == "acc":
-        return exectute_commands(lines, lineNum + 1, acc + arg, executed)
-    elif op == "jmp":
-        return exectute_commands(lines, lineNum + arg, acc, executed)
-    elif op == "nop":
-        return exectute_commands(lines, lineNum + 1, acc, executed)
-    else:
-        print("unexpected value: " + lines[lineNum])
-        return 0
+
+
+def exectute_commands(lst: list) -> int:
+    executed = []
+    lineNum =0
+    acc = 0
+    while lineNum not in executed and lineNum < len(lst):
+        split = lst[lineNum].strip().split(" ")
+        op = split[0]
+        arg = int(split[1])
+        executed.append(lineNum)
+        if op == "acc":
+            lineNum += 1
+            acc += arg
+        elif op == "jmp":
+            lineNum += arg
+        elif op == "nop":
+            lineNum += 1
+        else:
+            print("unexpected value: " + lst[lineNum])
+            return 0
+    if lineNum >= len(lines):
+        global completed
+        completed =True
+
+    return acc
         
-    
-def find_change(lines: list) -> int:
+def find_infinite_loop() -> int :
+    return exectute_commands(lines)
+
+def find_change() -> int:
     for i in range(len(lines)):
-        if  "nop" in lines[i]:
+        if "nop" in lines[i] or "jmp" in lines[i]:
             new_list = lines.copy()
-            new_list[i] = new_list[i].replace("nop", "jmp")
-            count = exectute_commands_2(new_list, 0, 0, list())
-            if(count!=None):
+            if  "nop" in lines[i]:
+                new_list = lines.copy()
+                new_list[i] = new_list[i].replace("nop", "jmp")
+
+            elif "jmp" in lines[i]:
+                new_list[i] = new_list[i].replace("jmp", "nop")
+
+            count = exectute_commands(new_list)
+            if completed:
                 return count
 
-        elif "jmp" in lines[i]:
-            new_list = lines.copy()
-            new_list[i] = new_list[i].replace("jmp", "nop")
-            count = exectute_commands_2(new_list, 0, 0, list())
-            if(count!=None):
-                return count
-
-
-def exectute_commands_2(lines: list, lineNum: int, acc: int, executed: list) -> int:
-    if lineNum in executed:
-        return
-    elif lineNum >= len(lines):
-        return acc
-    split = lines[lineNum].strip().split(" ")
-    op = split[0]
-    arg = int(split[1])
-    executed.append(lineNum)
-    if op == "acc":
-        return exectute_commands_2(lines, lineNum + 1, acc + arg, executed)
-    elif op == "jmp":
-        return exectute_commands_2(lines, lineNum + arg, acc, executed)
-    elif op == "nop":
-        return exectute_commands_2(lines, lineNum + 1, acc, executed)
-    else:
-        print("unexpected value: " + lines[lineNum])
-        return 0
 
 if __name__ == "__main__":
-    lines = ad.get_lines("Files/input_Day8.txt")
-    print(find_infinite_loop(lines))
-    print(find_change(lines))
+    lines = get_lines("Files/input_Day8.txt")
+    print(find_infinite_loop()) # 1528
+    # print(find_change()) # 640
+
+    # 0.000303822
+    print(time_function(func=find_infinite_loop, iterations=100))
+    # 0.001036342
+    print(time_function(func=find_change, iterations=100))

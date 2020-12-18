@@ -1,5 +1,5 @@
 import re
-import Common as ad
+from Common import time_function, get_lines
 
 """
 --- Day 4: Passport Processing ---
@@ -151,8 +151,7 @@ class Passport:
         return int(self.byr and self.iyr and self.eyr and self.hgt and self.hcl and self.ecl and self.pid)
 
 
-def count_valid_passports(filename: str) -> int:
-    lines = ad.get_lines(filename)
+def count_valid_passports() -> int:
     passport = Passport()
     valid_count = 0
     for line in lines:
@@ -248,12 +247,11 @@ class Passport_Strict:
         return int(self.byr and self.iyr and self.eyr and self.hgt and self.hcl and self.ecl and self.pid)
 
 
-def count_valid_passports_2(filename: str) -> int:
+def count_valid_passports_2() -> int:
     """
     Parses the file and creates passport objects for each of them, then sets the different values found in the file
     and counts the number of valid passports
     """
-    lines = ad.get_lines(filename)
     passport = Passport_Strict()
     valid_count = 0
     for line in lines:
@@ -285,5 +283,11 @@ def count_valid_passports_2(filename: str) -> int:
 
 
 if __name__ == '__main__':
-    print(count_valid_passports("Files/input_Day4.txt"))
-    print(count_valid_passports_2("Files/input_Day4.txt"))
+    lines = get_lines("Files/input_Day4.txt")
+    print(count_valid_passports()) # 232
+    print(count_valid_passports_2()) # 111
+
+    # # 0.0007303219999999999
+    # print(time_function(func=count_valid_passports, iterations=100))
+    # # 0.002544962
+    # print(time_function(func=count_valid_passports_2, iterations=100))
